@@ -10,8 +10,37 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="undefined" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.esm.min.js" integrity="undefined" crossorigin="anonymous"></script> -->
     <script>
+        const SEED_ACCEPTANCE_LT = 10;
+        const MULT_ACCEPTANCE_LT = 301;
+        const COUNT_PREV_CONTEST_DELTA = 3;
+        const MULTIPLIER = 10;
+        const UPP_LIM_FOR_MUL = 1000;
+        const MAX_RATING_SO_FAR = 3797;
+        const MY_FAV_REDUCING_AGENT = -3;
+
+        // 12
+        const title_on_rating = [
+            "Undated",
+            "Noobie", 
+            "Puppy-lil", "Spicy-list", "Eggs-puff",
+            "Candyman-Disaster", "Maatsaab", "Entertainment-Mstrbator", 
+            "Grandma's Sister", "Indigenous Gangbastad", "Legendary Grandma",
+            "Insanity"
+        ];
+
+        const ratings_list = [
+            1, 
+            1200, 1400, 1600, 
+            1900, 2100, 2300, 
+            2400, 2600, 3000, MAX_RATING_SO_FAR+1, 
+            10000
+        ];
+
+
+
         function PredictRatings(maxRating, currRating, delta_arr, luckyNumber) {
-            return 10;
+            var predictedRating = maxRating;
+            return predictedRating;
         }   
         function getRatings() {
             var maxRating = parseInt(document.getElementById("max-rating").value);
