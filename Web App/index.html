@@ -36,29 +36,63 @@
             10000
         ];
 
+        function warn(message) {
+
+        }
+
+        function generate_error(message) {
+
+        }
+
+        function validate_input(maxRating, currRating, prev_rating_deltas) {
+
+        }
+
+        function normalize_deltas(prev_rating_deltas) {
+            var rainboy_flag = false;
+            for (var i = 0; i < COUNT_PREV_CONTEST_DELTA; i++) {
+                rainboy_flag |= (Math.abs(prev_rating_deltas[i]) >= 111);
+            }
+
+            if (rainboy_flag) warn("\"rainboy delta is detected\"\n");
+
+            prev_rating_deltas.sort();
+
+            if (prev_rating_deltas[0] > 0) {
+                prev_rating_deltas[0] = - prev_rating_deltas[0];
+            }
+            if (prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1] < 0) {
+                prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1] = - prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1];
+            }
+            return prev_rating_deltas;
+        }
 
 
-        function PredictRatings(maxRating, currRating, delta_arr, luckyNumber) {
+        function PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber) {
             var predictedRating = maxRating;
+            validate_input(maxRating, currRating, prev_rating_deltas);
+            prev_rating_deltas = normalize_deltas(prev_rating_deltas);
+
             return predictedRating;
         }   
-        function getRatings() {
+
+        function getPredictedRatings() {
             var maxRating = parseInt(document.getElementById("max-rating").value);
             var currRating = parseInt(document.getElementById("curr-rating").value);
             var delta_array_obj = document.getElementsByName("delta-arr");
             var luckyNumber = parseInt(document.getElementById("lucky-number").value);
-            var delta_arr = []
+            var prev_rating_deltas = []
             for (var i = 0; i < delta_array_obj.length; i++) {
-                delta_arr.push(parseInt(delta_array_obj[i].value));
+                prev_rating_deltas.push(parseInt(delta_array_obj[i].value));
             }
 
-            console.log(delta_arr);
+            console.log(prev_rating_deltas);
             console.log(maxRating);
             console.log(currRating + maxRating);
 
-            var predictedRating = PredictRatings(maxRating, currRating, delta_arr, luckyNumber);
+            var predictedRating = PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber);
 
-            document.getElementById("predicted-ratings").innerHTML = predictedRating;// "ok tested";
+            document.getElementById("predicted-ratings").innerHTML = predictedRating; // "ok tested";
         }
     </script>
 </head>
@@ -82,7 +116,7 @@
                     <label for="lucky-number">Enter your lucky number</label>
                     <input type="text" class="form-control" id="lucky-number" placeholder="Lucky Number">
                 </div>
-                <button type = "button" class="btn btn-primary" onclick="getRatings()">Predict Ratings</button>
+                <button type = "button" class="btn btn-primary" onclick="getPredictedRatings()">Predict Ratings</button>
                 <div id = "predicted-ratings">
         
                 </div>
