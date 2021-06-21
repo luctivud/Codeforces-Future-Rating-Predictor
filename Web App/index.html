@@ -10,9 +10,26 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="undefined" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.esm.min.js" integrity="undefined" crossorigin="anonymous"></script> -->
     <script>
-        function PredictRatings() {
-            var maxRating = document.getElementById("max-rating").value;
-            document.getElementById("predicted-ratings").innerHTML = maxRating;// "ok tested";
+        function PredictRatings(maxRating, currRating, delta_arr, luckyNumber) {
+            return 10;
+        }   
+        function getRatings() {
+            var maxRating = parseInt(document.getElementById("max-rating").value);
+            var currRating = parseInt(document.getElementById("curr-rating").value);
+            var delta_array_obj = document.getElementsByName("delta-arr");
+            var luckyNumber = parseInt(document.getElementById("lucky-number").value);
+            var delta_arr = []
+            for (var i = 0; i < delta_array_obj.length; i++) {
+                delta_arr.push(parseInt(delta_array_obj[i].value));
+            }
+
+            console.log(delta_arr);
+            console.log(maxRating);
+            console.log(currRating + maxRating);
+
+            var predictedRating = PredictRatings(maxRating, currRating, delta_arr, luckyNumber);
+
+            document.getElementById("predicted-ratings").innerHTML = predictedRating;// "ok tested";
         }
     </script>
 </head>
@@ -28,15 +45,15 @@
                 </div>
                 <div class="form-group">
                     <label for="delta-1">Enter deltas from past 3 rounds</label>
-                    <input type="text" class="form-control" id="delta-1" placeholder="Delta 1">
-                    <input type="text" class="form-control" id="delta-2" placeholder="Delta 2">
-                    <input type="text" class="form-control" id="delta-3" placeholder="Delta 3">
+                    <input type="text" class="form-control" name = "delta-arr" id="delta-1" placeholder="Delta 1">
+                    <input type="text" class="form-control" name = "delta-arr" id="delta-2" placeholder="Delta 2">
+                    <input type="text" class="form-control" name = "delta-arr" id="delta-3" placeholder="Delta 3">
                 </div>
                 <div class="form-group">
                     <label for="lucky-number">Enter your lucky number</label>
                     <input type="text" class="form-control" id="lucky-number" placeholder="Lucky Number">
                 </div>
-                <button type="submit" class="btn btn-primary" onclick="PredictRatings()">Predict Ratings</button>
+                <button type = "button" class="btn btn-primary" onclick="getRatings()">Predict Ratings</button>
                 <div id = "predicted-ratings">
         
                 </div>
