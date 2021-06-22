@@ -1,10 +1,13 @@
-# Codeforces-Future-Rating-Predictor
+The working of this model will be updated here, in markdown, the work is in progress. Till then you can enjoy the app.
 
-The working of this model will be updated here, in markdown, it is still in progress.
 
 
 
 Link to the codeforces post: https://codeforces.com/blog/entry/92017
+
+
+# Codeforces-Future-Rating-Predictor
+
 
 Currently, it works on a statistical approach with a few randomisation techniques and outlier management technique. A modified form of K-means clustering has been used to detect the upper bound of rating and a free-form mean is used to get the lower bound of the rating. 
 
