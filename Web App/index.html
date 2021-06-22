@@ -9,6 +9,39 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="undefined" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="undefined" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.esm.min.js" integrity="undefined" crossorigin="anonymous"></script> -->
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script> <!-- codeforces icon-->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Balthazar&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat';
+            font-size: 1rem;
+        }
+        .bg-grayish {
+            background-color: #101010;
+            color: white;
+        }
+        .navbar-brand {
+            font-family: 'Balthazar', serif;
+            font-size: 2.4rem;
+        }
+        .tapered {
+            background-image: linear-gradient(179deg,rgb(254, 97, 158) 0%, rgb(254, 97, 158) 50%,transparent 54%, transparent 100%);
+        }
+
+        .tapered2 {
+            background-image: linear-gradient(181deg, #ffa620 0%, #fba11a 50%, transparent 54%, transparent 100%);
+        }
+        nav {
+            margin-bottom: 3.5rem;
+        }
+        nav a {
+            background-size: 100% 15%;
+            background-repeat: repeat-x;
+            background-position: left 0% bottom 10%;
+        }
+    </style>
     <script>
         const SEED_ACCEPTANCE_LT = 10;
         const MULT_ACCEPTANCE_LT = 301;
@@ -97,31 +130,52 @@
     </script>
 </head>
     
-<body>
-    <div class="row">
-        <div class="col-md-5 mx-auto">
-            <form>
-                <div class="form-group">
-                    <label for="max-rating">Enter Ratings</label>
-                    <input type="text" class="form-control" id="max-rating" placeholder="Max Rating">
-                    <input type="text" class="form-control" id="curr-rating" placeholder="Current Rating">
-                </div>
-                <div class="form-group">
-                    <label for="delta-1">Enter deltas from past 3 rounds</label>
-                    <input type="text" class="form-control" name = "delta-arr" id="delta-1" placeholder="Delta 1">
-                    <input type="text" class="form-control" name = "delta-arr" id="delta-2" placeholder="Delta 2">
-                    <input type="text" class="form-control" name = "delta-arr" id="delta-3" placeholder="Delta 3">
-                </div>
-                <div class="form-group">
-                    <label for="lucky-number">Enter your lucky number</label>
-                    <input type="text" class="form-control" id="lucky-number" placeholder="Lucky Number">
-                </div>
-                <button type = "button" class="btn btn-primary" onclick="getPredictedRatings()">Predict Ratings</button>
-                <div id = "predicted-ratings">
-        
-                </div>
-            </form>
+<body class="bg-grayish">
+    <!-- Header for page here -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-grayish">
+        <a class="navbar-brand mx-auto tapered2" href="#"> <span class="iconify" data-icon="simple-icons:codeforces" data-inline="false"></span> CodeForces Future Rating Predictor </a>
+    </nav>
+    
+    <!-- / Header for page here -->
+    <!-- User enter details here -->
+    <div class="container-fluid bg-grayish">
+        <div class="row d-flex">
+            <div class="col-md-12 mx-auto bg-grayish">
+                <form>
+                    <div class="form-group col-md-4 mx-auto pb-2">
+                        <label for="max-rating">Enter your max and current ratings</label>
+                        <input type="text" class="form-control mb-2" id="curr-rating" placeholder="Current Rating">
+                        <input type="text" class="form-control mb-2" id="max-rating" placeholder="Max Rating">
+                    </div>
+                    <div class="form-group col-md-4 mx-auto pb-2">
+                        <label for="delta-1">Enter deltas from past 3 rounds</label>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" name = "delta-arr" id="delta-1" placeholder="Delta 1">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" class="form-control" name = "delta-arr" id="delta-2" placeholder="Delta 2">
+                            </div>
+                            <div class="col-md-4">                            
+                                <input type="text" class="form-control" name = "delta-arr" id="delta-3" placeholder="Delta 3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4 mx-auto pb-2">
+                        <label for="lucky-number">Enter your lucky number</label>
+                        <input type="text" class="form-control" id="lucky-number" placeholder="Lucky Number">
+                    </div>
+                    <div type = "button" class="btn btn-primary col-md-4 d-flex mx-auto justify-content-center mb-2" onclick="getPredictedRatings()">Predict Ratings</div>
+                    <div id = "warning-generated"> </div>
+                    <div id = "predicted-ratings"> </div>
+                    <div class="challenge-problem"> </div>
+                </form>
+            </div>
         </div>
     </div>
+    <!-- / User enter details here -->
+    <!-- Footer for page here -->
+
+    <!-- / Footer for page here -->
 </body>
 </html>
