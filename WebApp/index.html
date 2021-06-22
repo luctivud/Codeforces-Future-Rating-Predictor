@@ -49,7 +49,7 @@
             background-image: linear-gradient(181deg, var(--GRADPRIMYUD) 0%, var(--GRADSECCYUD) 50%, transparent 54%, transparent 100%);
         }
         nav {
-            margin-bottom: 3.5rem;
+            margin-bottom: 2.5rem;
         }
         nav a {
             /* color: black; */
@@ -67,6 +67,11 @@
         .form-control:focus {
             border-color: var(--BGSECCYUD);  box-shadow: none; -webkit-box-shadow: none;
         } 
+        .rating-predicted-class {
+            font-size: 200%;
+            font-weight: 700;
+            letter-spacing: .4em;
+        }
     </style>
 </head>
 
@@ -136,8 +141,9 @@
     const UPP_LIM_FOR_MUL = 1000;
     const MAX_RATING_SO_FAR = 3797;
     const MY_FAV_REDUCING_AGENT = -3;
-
+    
     // 12
+    var currRank = -1;
     const title_on_rating = [
         "Undated",
         "Noobie", 
@@ -155,25 +161,56 @@
         10000
     ];
 
+
     function warn(message) {
 
     }
 
-    function generate_error(message) {
 
+    function generate_error(message) {
+        document.getElementById("warning-generated").innerHTML = "<span class = \"error-msg\">";
+        document.getElementById("warning-generated").innerHTML += message;
+        document.getElementById("warning-generated").innerHTML += "</span>";
     }
+
 
     function validate_input(maxRating, currRating, prev_rating_deltas) {
-
-    }
-
-    function normalize_deltas(prev_rating_deltas) {
-        var rainboy_flag = false;
-        for (var i = 0; i < COUNT_PREV_CONTEST_DELTA; i++) {
-            rainboy_flag |= (Math.abs(prev_rating_deltas[i]) >= 111);
+        if (maxRating === NaN) {
+            currRank = -1;
+            generate_error("Your max rating is NaN.");
+            return false;
+        } else if (currRating === NaN) {
+            currRank = -1;
+            generate_error("Your current rating is NaN.");
+            return false;
         }
 
-        if (rainboy_flag) warn("\"rainboy delta is detected\"\n");
+        for (var i = 0; i < 12; i++) {
+            if (ratings_list[i] > currRating) {
+                currRank = i;
+                break;
+            }
+        }
+        if ((maxRating > currRating) || (maxRating > MAX_RATING_SO_FAR)) {
+            currRank = -1;
+            if (maxRating > currRating) {
+                generate_error("Your max rating is greater than current rating.");
+            } else {
+                generate_error("You have insanely high rating.. You broke my code.. bich!");
+            }
+            return false;
+        }
+        return true;
+    }
+
+
+    function normalize_deltas(prev_rating_deltas) {
+        var rainboy_flag = true;
+        for (var i = 0; i < COUNT_PREV_CONTEST_DELTA; i++) {
+            rainboy_flag &= (Math.abs(prev_rating_deltas[i]) >= 80);
+        }
+
+        if (rainboy_flag) warn("\"rainboy delta is detected\"");
 
         prev_rating_deltas.sort();
 
@@ -189,15 +226,24 @@
 
     function PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber) {
         var predictedRating = maxRating;
-        validate_input(maxRating, currRating, prev_rating_deltas);
+        if (!validate_input(maxRating, currRating, prev_rating_deltas)) {
+            return "0 <br> You will be Undated";
+        }
         prev_rating_deltas = normalize_deltas(prev_rating_deltas);
+
+        // insert math shit here:
+
 
         return predictedRating;
     }   
 
+
     function ResetDivs(predictedRatingObj, warningObj, additionalThingsObj) {
         predictedRatingObj.innerHTML = "";
+        warningObj.innerHTML = "";
+        additionalThingsObj.innerHTML = "";
     }
+
 
     function getPredictedRatings() {
         const maxRating = parseInt(document.getElementById("max-rating").value);
@@ -206,14 +252,16 @@
         const luckyNumber = parseInt(document.getElementById("lucky-number").value);
         const predictedRatingObj = document.getElementById("predicted-ratings");
         const warningObj = document.getElementById("warning-generated");
-        const additionalThingsObj = document.getElementById("additinal-things");
+        const additionalThingsObj = document.getElementById("additional-things");
         var prev_rating_deltas = []
         for (var i = 0; i < delta_array_obj.length; i++) {
             prev_rating_deltas.push(parseInt(delta_array_obj[i].value));
         }
         
+        // reset the previous output
+        console.log(predictedRatingObj, warningObj, additionalThingsObj);
         ResetDivs(predictedRatingObj, warningObj, additionalThingsObj);
-
+        // input check
         console.log(prev_rating_deltas);
         console.log(maxRating);
         console.log(currRating + maxRating);
@@ -222,12 +270,20 @@
         
         predictedRatingObj.classList.add('magictime', 'puffIn');
         predictedRatingObj.innerHTML = "Your predicted rating is:<br>"
-        predictedRatingObj.innerHTML += predictedRating; // "ok tested";
-        console.log(predictedRatingObj)
-        setTimeout(()=>{ 
-            console.log(predictedRatingObj.classList);
+        predictedRatingObj.innerHTML += "<span class = \"rating-predicted-class\">"+predictedRating+"</span>"; // "ok tested";
+        // console.log(predictedRatingObj)
+
+        if (currRank != -1) {
+            // add analysis and challenge
+        } else {
+            // generate error stream
+        }
+
+        // remove the animation class for rendering it again without a reload
+        setTimeout( () => { 
+            // console.log(predictedRatingObj.classList);
             predictedRatingObj.classList.remove('magictime', 'puffIn');
-            console.log(predictedRatingObj.classList);
+            // console.log(predictedRatingObj.classList);
         }, 1500);
     }
     
