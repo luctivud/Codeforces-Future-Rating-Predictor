@@ -40,7 +40,7 @@
         }
         .navbar-brand {
             font-family: 'Balthazar', serif;
-            font-size: 2.4rem;
+            font-size: 2.3rem;
         }
         .tapered {
             background-image: linear-gradient(179deg,rgb(254, 97, 158) 0%, rgb(254, 97, 158) 50%,transparent 54%, transparent 100%);
@@ -50,7 +50,7 @@
             background-image: linear-gradient(181deg, var(--GRADPRIMYUD) 0%, var(--GRADSECCYUD) 50%, transparent 54%, transparent 100%);
         }
         nav {
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.7rem;
         }
         nav a {
             /* color: black; */
@@ -69,7 +69,7 @@
             border-color: var(--BGSECCYUD);  box-shadow: none; -webkit-box-shadow: none;
         } 
         .rating-predicted-class {
-            font-size: 200%;
+            font-size: 250%;
             font-weight: 700;
             text-shadow: 1px 1px 2px var(--SHADOWUD);
             letter-spacing: .4em;
@@ -88,7 +88,7 @@
         }
         .rainbow-text {
             background: linear-gradient(to right, red, orange , yellow, green, cyan, blue, violet);
-            color:transparent;
+            color: transparent;
             background-clip: text;
         }
     </style>
@@ -140,10 +140,12 @@
                         <label for="lucky-number">Enter your lucky number</label>
                         <input type="text" class="form-control" id="lucky-number" placeholder="Lucky Number">
                     </div>
-                    <div type = "button" class="btn bg-seccyud col-md-4 d-flex mx-auto justify-content-center mb-2" onclick="getPredictedRatings()">Predict Ratings</div>
+                    <div type = "button" class="btn bg-seccyud col-md-4 d-flex mx-auto justify-content-center mb-2" onclick="getPredictedRatings()">
+                        Predict Ratings
+                    </div>
                     <div class="col-md-4 mx-auto pb-2 text-center" id = "warning-generated"> </div>
                     <div class="col-md-4 mx-auto pb-2 text-center" id = "predicted-ratings"> </div>
-                    <div class="col-md-4 mx-auto pb-2 text-center" id = "additional-things"> </div>
+                    <div class="col-md-6 mx-auto pb-2 text-center" id = "additional-things"> </div>
                 </form>
             </div>
         </div>
@@ -161,6 +163,7 @@
     const UPP_LIM_FOR_MUL = 1000;
     const MAX_RATING_SO_FAR = 3797;
     const MY_FAV_REDUCING_AGENT = -3;
+    const MAX_CONTEST_SO_FAR = 1539;
     
     // 12
     var currRank = -1;
@@ -416,9 +419,15 @@
         if (currRank != -1) {
             // add analysis and challenge
             predictedRatingObj.innerHTML += "<br> You will be "+"<b><span class = \"shadow-only\" style = \" color: " + rating_color[predRank] + "\">" + title_on_rating[predRank] + "</span></b> soon.";
+            // challenge
+            var url_to_problem = "https://codeforces.com/problemset/problem/";
+            contest = Math.floor(Math.random() * MAX_CONTEST_SO_FAR) + 1;
+            problemtype = String.fromCharCode(65 + (currRank+1) / 2);
+            additionalThingsObj.innerHTML = "A challenge for you is to solve this problem:- &nbsp; " 
+            + contest + " " + problemtype
+            + " &nbsp; <a class = \"link-warning\" href = \"" + url_to_problem + "/" + contest + "/" + problemtype + "\" target=\"_blank\">click here</a>";
         } else {
-            // generate error stream
-
+            predictedRatingObj.innerHTML += "<br> Haha! <span class \"shadow-only\"><b>Undated</b></span> thing. Back off!";
         }
 
         // remove the animation class for rendering it again without a reload
@@ -426,7 +435,7 @@
             // console.log(predictedRatingObj.classList);
             predictedRatingObj.classList.remove('magictime', 'puffIn');
             // console.log(predictedRatingObj.classList);
-        }, 1500);
+        }, 1000);
     }
     
 </script>
