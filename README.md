@@ -1,6 +1,6 @@
 The working of this model will be updated here, in markdown, the work is in progress. Till then you can enjoy the app.
 
-
+Link to Web App: https://cffrpredict.netlify.app/
 
 
 Link to the codeforces post: https://codeforces.com/blog/entry/92017
