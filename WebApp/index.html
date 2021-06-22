@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CF Rating Predictor</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" integrity="undefined" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+        integrity="undefined" crossorigin="anonymous">
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="undefined" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="undefined" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.esm.min.js" integrity="undefined" crossorigin="anonymous"></script> -->
     <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script> <!-- codeforces icon-->
+    <script src="https://kit.fontawesome.com/49b5189e44.js" crossorigin="anonymous"></script>
+
+
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Balthazar&display=swap" rel="stylesheet">
@@ -24,34 +29,41 @@
             --GRADSECCYUD: #fba11a;
             --SHADOWUD: #ffffffa7;
         }
+
         body {
             font-family: 'Montserrat';
             /* color: black; */
             color: white;
             font-size: 1rem;
         }
+
         .bg-primyud {
             background-color: var(--BGPRIMYUD);
             color: white;
             /* color: black; */
         }
+
         .bg-seccyud {
             background-color: var(--BGSECCYUD);
         }
+
         .navbar-brand {
             font-family: 'Balthazar', serif;
             font-size: 2.3rem;
         }
+
         .tapered {
-            background-image: linear-gradient(179deg,rgb(254, 97, 158) 0%, rgb(254, 97, 158) 50%,transparent 54%, transparent 100%);
+            background-image: linear-gradient(179deg, rgb(254, 97, 158) 0%, rgb(254, 97, 158) 50%, transparent 54%, transparent 100%);
         }
 
         .tapered2 {
             background-image: linear-gradient(181deg, var(--GRADPRIMYUD) 0%, var(--GRADSECCYUD) 50%, transparent 54%, transparent 100%);
         }
+
         nav {
             margin-bottom: 1.7rem;
         }
+
         nav a {
             /* color: black; */
             color: white;
@@ -59,47 +71,70 @@
             background-repeat: repeat-x;
             background-position: left 0% bottom 10%;
         }
+
         nav a :hover {
             color: white;
         }
+
         nav a span :hover {
             background-color: blue;
         }
+
         .form-control:focus {
-            border-color: var(--BGSECCYUD);  box-shadow: none; -webkit-box-shadow: none;
-        } 
+            border-color: var(--BGSECCYUD);
+            box-shadow: none;
+            -webkit-box-shadow: none;
+        }
+
         .rating-predicted-class {
             font-size: 250%;
             font-weight: 700;
             text-shadow: 1px 1px 2px var(--SHADOWUD);
             letter-spacing: .4em;
         }
+
         .shadow-only {
             text-shadow: 1px 1px 1px var(--SHADOWUD);
             letter-spacing: .2em;
         }
+
         .error-msg {
             font-size: 80%;
             color: red;
         }
+
         .warn-msg {
             font-size: 80%;
             color: var(--BGSECCYUD);
         }
+
         .rainbow-text {
-            background: linear-gradient(to right, red, orange , yellow, green, cyan, blue, violet);
+            background: linear-gradient(to right, red, orange, yellow, green, cyan, blue, violet);
             color: transparent;
             background-clip: text;
+        }
+
+        .text-seccyud {
+            color: var(--BGSECCYUD);
+        }
+
+        .text-seccyud a {
+            color: var(--BGSECCYUD);
+        }
+
+        .text-seccyud a :hover {
+            color: var(--GRADPRIMYUD);
+            text-shadow: 0px 0px 1px var(--GRADSECCYUD);
         }
     </style>
 </head>
 
-    
+
 <body class="bg-primyud">
     <!-- Header for page here -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primyud">
-        <a class="navbar-brand mx-auto tapered2" href="#"> 
-            <span class="iconify" data-icon="simple-icons:codeforces" data-inline="false"></span> 
+    <nav class="navbar navbar-dark bg-primyud">
+        <a class="navbar-brand mx-auto tapered2" href="#">
+            <span class="iconify" data-icon="simple-icons:codeforces" data-inline="false"></span>
             <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="iconify" data-icon="simple-icons:codeforces" data-inline="false" style="transform: rotate(360deg);">
                 <path d="M4.5 7.5A1.5 1.5 0 0 1 6 9v10.5A1.5 1.5 0 0 1 4.5 21h-3C.673 21 0 20.328 0 
                 19.5V9c0-.828.673-1.5 1.5-1.5h3zm9-4.5A1.5 1.5 0 0 1 15 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-3c-.827 
@@ -109,7 +144,7 @@
             &nbsp;CF FRPredict
         </a>
     </nav>
-    
+
     <!-- / Header for page here -->
     <!-- User enter details here -->
     <!-- <h1 class="rainbow-text"> okok </h1> -->
@@ -117,42 +152,91 @@
         <div class="row d-flex">
             <div class="col-md-12 mx-auto bg-primyud">
                 <form>
-                    <div class="form-group col-md-4 mx-auto pb-2">
+                    <div class="form-group col-md-6 col-sm-12 col-lg-4 mx-auto pb-2">
                         <label for="max-rating">Enter your max and current ratings</label>
                         <input type="text" class="form-control mb-2" id="max-rating" placeholder="Max Rating">
                         <input type="text" class="form-control mb-2" id="curr-rating" placeholder="Current Rating">
                     </div>
-                    <div class="form-group col-md-4 mx-auto pb-4">
+                    <div class="form-group col-md-6 col-sm-12 col-lg-4 mx-auto pb-2">
                         <label for="delta-1">Enter deltas from past 3 rounds</label>
                         <div class="row">
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" name = "delta-arr" id="delta-1" placeholder="Delta 1">
+                            <div class="col-md-6 col-sm-12 col-lg-4">
+                                <input type="text" class="form-control mb-2" name="delta-arr" id="delta-1"
+                                    placeholder="Delta 1">
                             </div>
-                            <div class="col-md-4">
-                                <input type="text" class="form-control" name = "delta-arr" id="delta-2" placeholder="Delta 2">
+                            <div class="col-md-6 col-sm-12 col-lg-4">
+                                <input type="text" class="form-control mb-2" name="delta-arr" id="delta-2"
+                                    placeholder="Delta 2">
                             </div>
-                            <div class="col-md-4">                            
-                                <input type="text" class="form-control" name = "delta-arr" id="delta-3" placeholder="Delta 3">
+                            <div class="col-md-6 col-sm-12 col-lg-4">
+                                <input type="text" class="form-control mb-2" name="delta-arr" id="delta-3"
+                                    placeholder="Delta 3">
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4 mx-auto pb-4">
+                    <div class="form-group col-md-6 col-sm-12 col-lg-4 mx-auto pb-2">
                         <label for="lucky-number">Enter your lucky number</label>
-                        <input type="text" class="form-control" id="lucky-number" placeholder="Lucky Number">
+                        <input type="text" class="form-control mb-2" id="lucky-number" placeholder="Lucky Number">
                     </div>
-                    <div type = "button" class="btn bg-seccyud col-md-4 d-flex mx-auto justify-content-center mb-2" onclick="getPredictedRatings()">
+                    <div type="button"
+                        class="btn bg-seccyud col-md-6 col-sm-12 col-lg-4 d-flex mx-auto justify-content-center mb-2"
+                        onclick="getPredictedRatings()">
                         Predict Ratings
                     </div>
-                    <div class="col-md-4 mx-auto pb-2 text-center" id = "warning-generated"> </div>
-                    <div class="col-md-4 mx-auto pb-2 text-center" id = "predicted-ratings"> </div>
-                    <div class="col-md-6 mx-auto pb-2 text-center" id = "additional-things"> </div>
+                    <div class="col-md-6 col-sm-12 col-lg-4 mx-auto pb-2 text-center" id="warning-generated"> </div>
+                    <div class="col-md-6 col-sm-12 col-lg-4 mx-auto pb-2 text-center" id="predicted-ratings"> </div>
+                    <div class="col-md-6 mx-auto pb-2 text-center" id="additional-things"> </div>
                 </form>
             </div>
         </div>
     </div>
     <!-- / User enter details here -->
     <!-- Footer for page here -->
+    <footer class="fixed-bottom page-footer font-small special-color-dark text-seccyud pt-4">
 
+        <!-- Footer Elements -->
+        <div class="container">
+
+            <!-- Social buttons -->
+            <ul class="list-unstyled list-inline text-center">
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-li mx-1" href="https://www.linkedin.com/in/udit-gupta-1b7863135/">
+                        <i class="fab fa-linkedin-in"> </i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-git mx-1" href="https://github.com/luctivud">
+                        <i class="fab fa-github"> </i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-tw mx-1" href="https://mobile.twitter.com/luctivud">
+                        <i class="fab fa-twitter"> </i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-fb mx-1" href="https://m.facebook.com/udit.gupta.10048">
+                        <i class="fab fa-facebook-f"> </i>
+                    </a>
+                </li>
+                <li class="list-inline-item">
+                    <a class="btn-floating btn-code mx-1" href="https://clist.by/coder/luctivud/">
+                        <i class="fas fa-code"> </i>
+                    </a>
+                </li>
+            </ul>
+            <!-- Social buttons -->
+
+        </div>
+        <!-- Footer Elements -->
+
+        <!-- Copyright -->
+        <div class="footer-copyright text-center mb-2" style="font-size: 80%;">
+            Developed by: Udit "luctivud" Gupta
+        </div>
+        <!-- Copyright -->
+
+    </footer>
     <!-- / Footer for page here -->
 </body>
 <script>
@@ -164,23 +248,23 @@
     const MAX_RATING_SO_FAR = 3797;
     const MY_FAV_REDUCING_AGENT = -3;
     const MAX_CONTEST_SO_FAR = 1539;
-    
+
     // 12
     var currRank = -1;
     const title_on_rating = [
         "Undated",
-        "Noobie", 
+        "Noobie",
         "Puppy-lil", "Spicy-list", "Eggs-puff",
-        "Candyman-Disaster", "Maatsaab", "Entertainment-Mstrbator", 
+        "Candyman-Disaster", "Maatsaab", "Entertainment-Mstrbator",
         "Grandma's Sister", "Indigenous Gangbastad", "egendary Grandma",
         "Insanity"
     ];
 
     const ratings_list = [
-        1, 
-        1200, 1400, 1600, 
-        1900, 2100, 2300, 
-        2400, 2600, 3000, MAX_RATING_SO_FAR+1, 
+        1,
+        1200, 1400, 1600,
+        1900, 2100, 2300,
+        2400, 2600, 3000, MAX_RATING_SO_FAR + 1,
         10000
     ];
 
@@ -232,7 +316,7 @@
         }
         for (var i = 0; i < COUNT_PREV_CONTEST_DELTA; i++) {
             if (Number.isNaN(prev_rating_deltas[i])) {
-                generate_error("Enter delta " + (i+1) + " properly");
+                generate_error("Enter delta " + (i + 1) + " properly");
                 return false;
             }
         }
@@ -253,8 +337,8 @@
         if (prev_rating_deltas[0] > 0) {
             prev_rating_deltas[0] = - prev_rating_deltas[0];
         }
-        if (prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1] < 0) {
-            prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1] = - prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1];
+        if (prev_rating_deltas[COUNT_PREV_CONTEST_DELTA - 1] < 0) {
+            prev_rating_deltas[COUNT_PREV_CONTEST_DELTA - 1] = - prev_rating_deltas[COUNT_PREV_CONTEST_DELTA - 1];
         }
         return prev_rating_deltas;
     }
@@ -320,7 +404,7 @@
 
             resultantRatingDelta /= multSum;
             predicted_n_ratings.push(thisRating + resultantRatingDelta);
-        }       
+        }
 
         predicted_n_ratings.sort();
         var median1 = testCases / 2, median2 = testCases / 2 + 1;
@@ -359,7 +443,7 @@
         }
 
         seeds.sort();
-        var KEN_MULTIPLIER =  Math.floor(Math.random() * MULT_ACCEPTANCE_LT) + MULTIPLIER;
+        var KEN_MULTIPLIER = Math.floor(Math.random() * MULT_ACCEPTANCE_LT) + MULTIPLIER;
         var XEN_MULTIPLIER = Math.floor(Math.random() * KEN_MULTIPLIER) / 2 + 1;
 
         predictedRating =
@@ -370,7 +454,7 @@
             );
 
         return parseInt(predictedRating);
-    }   
+    }
 
 
     function ResetDivs(predictedRatingObj, warningObj, additionalThingsObj) {
@@ -392,8 +476,8 @@
         for (var i = 0; i < delta_array_obj.length; i++) {
             prev_rating_deltas.push(parseInt(delta_array_obj[i].value));
         }
-        
-        
+
+
 
         // reset the previous output
         // console.log(predictedRatingObj, warningObj, additionalThingsObj);
@@ -402,12 +486,12 @@
         // console.log(prev_rating_deltas);
         // console.log(maxRating);
         // console.log(currRating + maxRating);
-        
+
         var predictedRating = PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber);
-        
+
         predictedRatingObj.classList.add('magictime', 'puffIn');
         predictedRatingObj.innerHTML = "Your predicted rating is:<br>"
-        predictedRatingObj.innerHTML += "<span class = \"rating-predicted-class\">"+predictedRating+"</span>"; // "ok tested";
+        predictedRatingObj.innerHTML += "<span class = \"rating-predicted-class\">" + predictedRating + "</span>"; // "ok tested";
         // console.log(predictedRatingObj)
         var predRank = currRank;
         for (var ll = 0; ll < 12; ll++) {
@@ -418,25 +502,26 @@
         }
         if (currRank != -1) {
             // add analysis and challenge
-            predictedRatingObj.innerHTML += "<br> You will be "+"<b><span class = \"shadow-only\" style = \" color: " + rating_color[predRank] + "\">" + title_on_rating[predRank] + "</span></b> soon.";
+            predictedRatingObj.innerHTML += "<br> You will be " + "<b><span class = \"shadow-only\" style = \" color: " + rating_color[predRank] + "\">" + title_on_rating[predRank] + "</span></b> soon.";
             // challenge
             var url_to_problem = "https://codeforces.com/problemset/problem/";
             contest = Math.floor(Math.random() * MAX_CONTEST_SO_FAR) + 1;
-            problemtype = String.fromCharCode(65 + (currRank+1) / 2);
-            additionalThingsObj.innerHTML = "A challenge for you is to solve this problem:- &nbsp; " 
-            + contest + " " + problemtype
-            + " &nbsp; <a class = \"link-warning\" href = \"" + url_to_problem + "/" + contest + "/" + problemtype + "\" target=\"_blank\">click here</a>";
+            problemtype = String.fromCharCode(65 + (currRank + 1) / 2);
+            additionalThingsObj.innerHTML = "A challenge for you is to solve this problem:- &nbsp; "
+                + contest + " " + problemtype
+                + " &nbsp; <a class = \"link-warning\" href = \"" + url_to_problem + "/" + contest + "/" + problemtype + "\" target=\"_blank\">click here</a>";
         } else {
             predictedRatingObj.innerHTML += "<br> Haha! <span class \"shadow-only\"><b>Undated</b></span> thing. Back off!";
         }
 
         // remove the animation class for rendering it again without a reload
-        setTimeout( () => { 
+        setTimeout(() => {
             // console.log(predictedRatingObj.classList);
             predictedRatingObj.classList.remove('magictime', 'puffIn');
             // console.log(predictedRatingObj.classList);
         }, 1000);
     }
-    
+
 </script>
+
 </html>
