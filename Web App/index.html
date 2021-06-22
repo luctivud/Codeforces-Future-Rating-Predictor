@@ -58,6 +58,12 @@
             background-repeat: repeat-x;
             background-position: left 0% bottom 10%;
         }
+        nav a :hover {
+            color: white;
+        }
+        nav a span :hover {
+            background-color: blue;
+        }
         .form-control:focus {
             border-color: var(--BGSECCYUD);  box-shadow: none; -webkit-box-shadow: none;
         } 
@@ -67,8 +73,17 @@
     
 <body class="bg-primyud">
     <!-- Header for page here -->
-    <nav class="navbar navbar-expand-lg bg-primyud">
-        <a class="navbar-brand mx-auto tapered2" href="#"> <span class="iconify" data-icon="simple-icons:codeforces" data-inline="false"></span> CodeForces Future Rating Predictor </a>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primyud">
+        <a class="navbar-brand mx-auto tapered2" href="#"> 
+            <span class="iconify" data-icon="simple-icons:codeforces" data-inline="false"></span> 
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" focusable="false" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" class="iconify" data-icon="simple-icons:codeforces" data-inline="false" style="transform: rotate(360deg);">
+                <path d="M4.5 7.5A1.5 1.5 0 0 1 6 9v10.5A1.5 1.5 0 0 1 4.5 21h-3C.673 21 0 20.328 0 
+                19.5V9c0-.828.673-1.5 1.5-1.5h3zm9-4.5A1.5 1.5 0 0 1 15 4.5v15a1.5 1.5 0 0 1-1.5 1.5h-3c-.827 
+                0-1.5-.672-1.5-1.5v-15c0-.828.673-1.5 1.5-1.5h3zm9 7.5A1.5 1.5 0 0 1 24 12v7.5a1.5 1.5 0 0 1-1.5 
+                1.5h-3a1.5 1.5 0 0 1-1.5-1.5V12a1.5 1.5 0 0 1 1.5-1.5h3z" fill="blue"></path>
+            </svg> -->
+            CodeForces Future Rating Predictor 
+        </a>
     </nav>
     
     <!-- / Header for page here -->
@@ -182,9 +197,6 @@
 
     function ResetDivs(predictedRatingObj, warningObj, additionalThingsObj) {
         predictedRatingObj.innerHTML = "";
-        console.log(predictedRatingObj.classList);
-        predictedRatingObj.classList.remove('magictime', 'puffIn');
-        console.log(predictedRatingObj.classList);
     }
 
     function getPredictedRatings() {
@@ -212,6 +224,11 @@
         predictedRatingObj.innerHTML = "Your predicted rating is:<br>"
         predictedRatingObj.innerHTML += predictedRating; // "ok tested";
         console.log(predictedRatingObj)
+        setTimeout(()=>{ 
+            console.log(predictedRatingObj.classList);
+            predictedRatingObj.classList.remove('magictime', 'puffIn');
+            console.log(predictedRatingObj.classList);
+        }, 1500);
     }
     
 </script>
