@@ -240,7 +240,7 @@
     function PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber) {
         var predictedRating = maxRating;
         if (!validate_input(maxRating, currRating, prev_rating_deltas)) {
-            return "0";
+            // return "0";
         }
         prev_rating_deltas = normalize_deltas(prev_rating_deltas);
 
@@ -249,12 +249,104 @@
             luckyNumber = 3;
         }
 
+        var testCases = (luckyNumber % 9) + 1;
+        testCases *= MULTIPLIER;
+
         // insert math shit here:
 
+        var predicted_n_ratings = [];
 
+        var seeds = [1, 1];
+        seeds.forEach((seed, index) => {
+            seeds[index] = Math.floor(Math.random() * SEED_ACCEPTANCE_LT) + 1;
+        }, seeds);
 
+        while (seeds[0] == seeds[1]) {
+            seeds[0] = Math.floor(Math.random() * SEED_ACCEPTANCE_LT) + 1;
+        }
+        // console.log(seeds);
+        for (var tc = 0; tc < testCases; tc++) {
 
-        return predictedRating;
+            var thisRating =
+                (
+                    (seeds[0] * currRating + seeds[1] * maxRating)
+                    /
+                    (seeds[0] + seeds[1])
+                );
+
+            var multipliers_for_prev_rounds = [];
+            for (var mm = 0; mm < COUNT_PREV_CONTEST_DELTA; mm++) {
+                multipliers_for_prev_rounds.push(Math.floor(Math.random() * UPP_LIM_FOR_MUL) + 1);
+            }
+
+            multipliers_for_prev_rounds.sort();
+            // console.log(multipliers_for_prev_rounds);
+            var medianPos = COUNT_PREV_CONTEST_DELTA / 2;
+            for (var cc = 0; cc < COUNT_PREV_CONTEST_DELTA; cc++) {
+                while (Math.abs(multipliers_for_prev_rounds[cc] - multipliers_for_prev_rounds[medianPos]) > MULT_ACCEPTANCE_LT) {
+                    multipliers_for_prev_rounds[cc] = Math.floor(Math.random() * UPP_LIM_FOR_MUL) + 1;
+                }
+                multipliers_for_prev_rounds.sort();
+            }
+
+            var resultantRatingDelta = 0, multSum = 0;
+            for (var position = 0; position < COUNT_PREV_CONTEST_DELTA; position++) {
+                resultantRatingDelta += (multipliers_for_prev_rounds[position] * prev_rating_deltas[position]);
+                multSum += multipliers_for_prev_rounds[position];
+            }
+
+            resultantRatingDelta /= multSum;
+            predicted_n_ratings.push(thisRating + resultantRatingDelta);
+        }       
+
+        predicted_n_ratings.sort();
+        var median1 = testCases / 2, median2 = testCases / 2 + 1;
+        var group1_mean = predicted_n_ratings[median1], group2_mean = predicted_n_ratings[median2];
+        var group1_nos = 1, group2_nos = 1;
+        var sophisticated_sum1 = 0, sophisticated_sum2 = 0;
+
+        for (var i = 0; i < testCases; i++) {
+            if (Math.abs(group1_mean - predicted_n_ratings[i]) < Math.abs(group2_mean - predicted_n_ratings[i])) {
+                if (Math.abs(group1_mean - predicted_n_ratings[i]) < MULT_ACCEPTANCE_LT) {
+                    group1_mean = (group1_mean + predicted_n_ratings[i]) / 2;
+                    sophisticated_sum1 += predicted_n_ratings[i];
+                    group1_nos++;
+                }
+            } else {
+                if (Math.abs(group2_mean - predicted_n_ratings[i]) < MULT_ACCEPTANCE_LT) {
+                    group2_mean = (group2_mean + predicted_n_ratings[i]) / 2;
+                    sophisticated_sum2 += predicted_n_ratings[i];
+                    group2_nos++;
+                }
+            }
+        }
+        var KNN_like_mean =
+            (
+                ((group1_mean * group1_nos) + (group2_mean * group2_nos))
+                /
+                (group2_nos + group1_nos)
+            );
+        var sophisticated_like_mean =
+            (((sophisticated_sum1 / group1_nos) + (sophisticated_sum2 / group2_nos)) / 2);
+
+        console.log(KNN_like_mean, sophisticated_like_mean);
+
+        if (sophisticated_like_mean > KNN_like_mean) {
+            [sophisticated_like_mean, KNN_like_mean] = [KNN_like_mean, sophisticated_like_mean];
+        }
+
+        seeds.sort();
+        var KEN_MULTIPLIER =  Math.floor(Math.random() * MULT_ACCEPTANCE_LT) + MULTIPLIER;
+        var XEN_MULTIPLIER = Math.floor(Math.random() * KEN_MULTIPLIER) / 2 + 1;
+
+        predictedRating =
+            (
+                ((XEN_MULTIPLIER * seeds[0] * sophisticated_like_mean) + (KEN_MULTIPLIER * seeds[1] * KNN_like_mean))
+                /
+                (((XEN_MULTIPLIER * seeds[0])) + (KEN_MULTIPLIER * seeds[1]))
+            );
+
+        return parseInt(predictedRating);
     }   
 
 
