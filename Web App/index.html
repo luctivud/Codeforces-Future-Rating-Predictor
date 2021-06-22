@@ -13,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Balthazar&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="magic.css/dist/magic.css">
     <style>
         body {
             font-family: 'Montserrat';
@@ -42,93 +43,8 @@
             background-position: left 0% bottom 10%;
         }
     </style>
-    <script>
-        const SEED_ACCEPTANCE_LT = 10;
-        const MULT_ACCEPTANCE_LT = 301;
-        const COUNT_PREV_CONTEST_DELTA = 3;
-        const MULTIPLIER = 10;
-        const UPP_LIM_FOR_MUL = 1000;
-        const MAX_RATING_SO_FAR = 3797;
-        const MY_FAV_REDUCING_AGENT = -3;
-
-        // 12
-        const title_on_rating = [
-            "Undated",
-            "Noobie", 
-            "Puppy-lil", "Spicy-list", "Eggs-puff",
-            "Candyman-Disaster", "Maatsaab", "Entertainment-Mstrbator", 
-            "Grandma's Sister", "Indigenous Gangbastad", "Legendary Grandma",
-            "Insanity"
-        ];
-
-        const ratings_list = [
-            1, 
-            1200, 1400, 1600, 
-            1900, 2100, 2300, 
-            2400, 2600, 3000, MAX_RATING_SO_FAR+1, 
-            10000
-        ];
-
-        function warn(message) {
-
-        }
-
-        function generate_error(message) {
-
-        }
-
-        function validate_input(maxRating, currRating, prev_rating_deltas) {
-
-        }
-
-        function normalize_deltas(prev_rating_deltas) {
-            var rainboy_flag = false;
-            for (var i = 0; i < COUNT_PREV_CONTEST_DELTA; i++) {
-                rainboy_flag |= (Math.abs(prev_rating_deltas[i]) >= 111);
-            }
-
-            if (rainboy_flag) warn("\"rainboy delta is detected\"\n");
-
-            prev_rating_deltas.sort();
-
-            if (prev_rating_deltas[0] > 0) {
-                prev_rating_deltas[0] = - prev_rating_deltas[0];
-            }
-            if (prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1] < 0) {
-                prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1] = - prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1];
-            }
-            return prev_rating_deltas;
-        }
-
-
-        function PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber) {
-            var predictedRating = maxRating;
-            validate_input(maxRating, currRating, prev_rating_deltas);
-            prev_rating_deltas = normalize_deltas(prev_rating_deltas);
-
-            return predictedRating;
-        }   
-
-        function getPredictedRatings() {
-            var maxRating = parseInt(document.getElementById("max-rating").value);
-            var currRating = parseInt(document.getElementById("curr-rating").value);
-            var delta_array_obj = document.getElementsByName("delta-arr");
-            var luckyNumber = parseInt(document.getElementById("lucky-number").value);
-            var prev_rating_deltas = []
-            for (var i = 0; i < delta_array_obj.length; i++) {
-                prev_rating_deltas.push(parseInt(delta_array_obj[i].value));
-            }
-
-            console.log(prev_rating_deltas);
-            console.log(maxRating);
-            console.log(currRating + maxRating);
-
-            var predictedRating = PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber);
-
-            document.getElementById("predicted-ratings").innerHTML = predictedRating; // "ok tested";
-        }
-    </script>
 </head>
+
     
 <body class="bg-grayish">
     <!-- Header for page here -->
@@ -147,7 +63,7 @@
                         <input type="text" class="form-control mb-2" id="curr-rating" placeholder="Current Rating">
                         <input type="text" class="form-control mb-2" id="max-rating" placeholder="Max Rating">
                     </div>
-                    <div class="form-group col-md-4 mx-auto pb-2">
+                    <div class="form-group col-md-4 mx-auto pb-4">
                         <label for="delta-1">Enter deltas from past 3 rounds</label>
                         <div class="row">
                             <div class="col-md-4">
@@ -161,14 +77,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-4 mx-auto pb-2">
+                    <div class="form-group col-md-4 mx-auto pb-4">
                         <label for="lucky-number">Enter your lucky number</label>
                         <input type="text" class="form-control" id="lucky-number" placeholder="Lucky Number">
                     </div>
                     <div type = "button" class="btn btn-primary col-md-4 d-flex mx-auto justify-content-center mb-2" onclick="getPredictedRatings()">Predict Ratings</div>
-                    <div id = "warning-generated"> </div>
-                    <div id = "predicted-ratings"> </div>
-                    <div class="challenge-problem"> </div>
+                    <div class="col-md-4 mx-auto pb-2 text-center magictime puffIn" id = "warning-generated"> 12 </div>
+                    <div class="col-md-4 mx-auto pb-2 justify-content-center" id = "predicted-ratings"> </div>
+                    <div class="col-md-4 mx-auto pb-2 justify-content-center" id = "challenge-problem"> </div>
                 </form>
             </div>
         </div>
@@ -178,4 +94,94 @@
 
     <!-- / Footer for page here -->
 </body>
+<script>
+    const SEED_ACCEPTANCE_LT = 10;
+    const MULT_ACCEPTANCE_LT = 301;
+    const COUNT_PREV_CONTEST_DELTA = 3;
+    const MULTIPLIER = 10;
+    const UPP_LIM_FOR_MUL = 1000;
+    const MAX_RATING_SO_FAR = 3797;
+    const MY_FAV_REDUCING_AGENT = -3;
+
+    // 12
+    const title_on_rating = [
+        "Undated",
+        "Noobie", 
+        "Puppy-lil", "Spicy-list", "Eggs-puff",
+        "Candyman-Disaster", "Maatsaab", "Entertainment-Mstrbator", 
+        "Grandma's Sister", "Indigenous Gangbastad", "Legendary Grandma",
+        "Insanity"
+    ];
+
+    const ratings_list = [
+        1, 
+        1200, 1400, 1600, 
+        1900, 2100, 2300, 
+        2400, 2600, 3000, MAX_RATING_SO_FAR+1, 
+        10000
+    ];
+
+    function warn(message) {
+
+    }
+
+    function generate_error(message) {
+
+    }
+
+    function validate_input(maxRating, currRating, prev_rating_deltas) {
+
+    }
+
+    function normalize_deltas(prev_rating_deltas) {
+        var rainboy_flag = false;
+        for (var i = 0; i < COUNT_PREV_CONTEST_DELTA; i++) {
+            rainboy_flag |= (Math.abs(prev_rating_deltas[i]) >= 111);
+        }
+
+        if (rainboy_flag) warn("\"rainboy delta is detected\"\n");
+
+        prev_rating_deltas.sort();
+
+        if (prev_rating_deltas[0] > 0) {
+            prev_rating_deltas[0] = - prev_rating_deltas[0];
+        }
+        if (prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1] < 0) {
+            prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1] = - prev_rating_deltas[COUNT_PREV_CONTEST_DELTA-1];
+        }
+        return prev_rating_deltas;
+    }
+
+
+    function PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber) {
+        var predictedRating = maxRating;
+        validate_input(maxRating, currRating, prev_rating_deltas);
+        prev_rating_deltas = normalize_deltas(prev_rating_deltas);
+
+        return predictedRating;
+    }   
+
+    function getPredictedRatings() {
+        var maxRating = parseInt(document.getElementById("max-rating").value);
+        var currRating = parseInt(document.getElementById("curr-rating").value);
+        var delta_array_obj = document.getElementsByName("delta-arr");
+        var luckyNumber = parseInt(document.getElementById("lucky-number").value);
+        var prev_rating_deltas = []
+        for (var i = 0; i < delta_array_obj.length; i++) {
+            prev_rating_deltas.push(parseInt(delta_array_obj[i].value));
+        }
+        
+        console.log(prev_rating_deltas);
+        console.log(maxRating);
+        console.log(currRating + maxRating);
+        
+        var predictedRating = PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber);
+        
+        document.getElementById("predicted-ratings").innerHTML = predictedRating; // "ok tested";
+    }
+    
+    // var selector = document.getElementById("warning-generated");
+    // console.log(selector)
+    // selector.classList.add('magictime', 'puffIn');
+</script>
 </html>
