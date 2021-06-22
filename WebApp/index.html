@@ -72,6 +72,14 @@
             font-weight: 700;
             letter-spacing: .4em;
         }
+        .error-msg {
+            font-size: 80%;
+            color: red;
+        }
+        .warn-msg {
+            font-size: 80%;
+            color: var(--BGSECCYUD);
+        }
     </style>
 </head>
 
@@ -99,8 +107,8 @@
                 <form>
                     <div class="form-group col-md-4 mx-auto pb-2">
                         <label for="max-rating">Enter your max and current ratings</label>
-                        <input type="text" class="form-control mb-2" id="curr-rating" placeholder="Current Rating">
                         <input type="text" class="form-control mb-2" id="max-rating" placeholder="Max Rating">
+                        <input type="text" class="form-control mb-2" id="curr-rating" placeholder="Current Rating">
                     </div>
                     <div class="form-group col-md-4 mx-auto pb-4">
                         <label for="delta-1">Enter deltas from past 3 rounds</label>
@@ -163,25 +171,25 @@
 
 
     function warn(message) {
-
+        document.getElementById("warning-generated").innerHTML += "<span class = \"warn-msg\">" + message + "</span><br>";
     }
 
 
     function generate_error(message) {
-        document.getElementById("warning-generated").innerHTML = "<span class = \"error-msg\">";
-        document.getElementById("warning-generated").innerHTML += message;
-        document.getElementById("warning-generated").innerHTML += "</span>";
+        this.currRank = -1;
+        // console.log("het", currRank);
+        console.log(message);
+        document.getElementById("warning-generated").innerHTML = "<span class = \"error-msg\">" + message + "</span><br>";
     }
 
 
     function validate_input(maxRating, currRating, prev_rating_deltas) {
-        if (maxRating === NaN) {
-            currRank = -1;
-            generate_error("Your max rating is NaN.");
+        // console.log(Number.isNaN(maxRating));
+        if (Number.isNaN(maxRating)) {
+            generate_error("Your max rating is NaN");
             return false;
-        } else if (currRating === NaN) {
-            currRank = -1;
-            generate_error("Your current rating is NaN.");
+        } else if (Number.isNaN(currRating)) {
+            generate_error("Your current rating is NaN");
             return false;
         }
 
@@ -191,14 +199,19 @@
                 break;
             }
         }
-        if ((maxRating > currRating) || (maxRating > MAX_RATING_SO_FAR)) {
-            currRank = -1;
-            if (maxRating > currRating) {
-                generate_error("Your max rating is greater than current rating.");
+        if ((maxRating < currRating) || (maxRating > MAX_RATING_SO_FAR)) {
+            if (maxRating < currRating) {
+                generate_error("Your max rating is less than current rating.");
             } else {
                 generate_error("You have insanely high rating.. You broke my code.. bich!");
             }
             return false;
+        }
+        for (var i = 0; i < COUNT_PREV_CONTEST_DELTA; i++) {
+            if (Number.isNaN(prev_rating_deltas[i])) {
+                generate_error("Enter delta " + (i+1) + " properly");
+                return false;
+            }
         }
         return true;
     }
@@ -227,11 +240,18 @@
     function PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber) {
         var predictedRating = maxRating;
         if (!validate_input(maxRating, currRating, prev_rating_deltas)) {
-            return "0 <br> You will be Undated";
+            return "0";
         }
         prev_rating_deltas = normalize_deltas(prev_rating_deltas);
 
+        if (Number.isNaN(luckyNumber)) {
+            warn("You didn't enter your lucky number.. so I entered mine!");
+            luckyNumber = 3;
+        }
+
         // insert math shit here:
+
+
 
 
         return predictedRating;
@@ -258,25 +278,29 @@
             prev_rating_deltas.push(parseInt(delta_array_obj[i].value));
         }
         
+        
+
         // reset the previous output
-        console.log(predictedRatingObj, warningObj, additionalThingsObj);
+        // console.log(predictedRatingObj, warningObj, additionalThingsObj);
         ResetDivs(predictedRatingObj, warningObj, additionalThingsObj);
         // input check
-        console.log(prev_rating_deltas);
-        console.log(maxRating);
-        console.log(currRating + maxRating);
+        // console.log(prev_rating_deltas);
+        // console.log(maxRating);
+        // console.log(currRating + maxRating);
         
         var predictedRating = PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber);
         
         predictedRatingObj.classList.add('magictime', 'puffIn');
         predictedRatingObj.innerHTML = "Your predicted rating is:<br>"
         predictedRatingObj.innerHTML += "<span class = \"rating-predicted-class\">"+predictedRating+"</span>"; // "ok tested";
+        predictedRatingObj.innerHTML += "<br> You will be <b>" + title_on_rating[currRank + 1] + "</b> soon.";
         // console.log(predictedRatingObj)
 
         if (currRank != -1) {
             // add analysis and challenge
         } else {
             // generate error stream
+
         }
 
         // remove the animation class for rendering it again without a reload
