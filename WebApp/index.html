@@ -22,6 +22,7 @@
             --FGPRIMYUD: #ffffff;
             --GRADPRIMYUD: #ffa620;
             --GRADSECCYUD: #fba11a;
+            --SHADOWUD: #ffffffa7;
         }
         body {
             font-family: 'Montserrat';
@@ -70,7 +71,12 @@
         .rating-predicted-class {
             font-size: 200%;
             font-weight: 700;
+            text-shadow: 1px 1px 2px var(--SHADOWUD);
             letter-spacing: .4em;
+        }
+        .shadow-only {
+            text-shadow: 1px 1px 1px var(--SHADOWUD);
+            letter-spacing: .2em;
         }
         .error-msg {
             font-size: 80%;
@@ -79,6 +85,11 @@
         .warn-msg {
             font-size: 80%;
             color: var(--BGSECCYUD);
+        }
+        .rainbow-text {
+            background: linear-gradient(to right, red, orange , yellow, green, cyan, blue, violet);
+            color:transparent;
+            background-clip: text;
         }
     </style>
 </head>
@@ -101,6 +112,7 @@
     
     <!-- / Header for page here -->
     <!-- User enter details here -->
+    <!-- <h1 class="rainbow-text"> okok </h1> -->
     <div class="container-fluid bg-primyud">
         <div class="row d-flex">
             <div class="col-md-12 mx-auto bg-primyud">
@@ -157,7 +169,7 @@
         "Noobie", 
         "Puppy-lil", "Spicy-list", "Eggs-puff",
         "Candyman-Disaster", "Maatsaab", "Entertainment-Mstrbator", 
-        "Grandma's Sister", "Indigenous Gangbastad", "Legendary Grandma",
+        "Grandma's Sister", "Indigenous Gangbastad", "egendary Grandma",
         "Insanity"
     ];
 
@@ -168,6 +180,14 @@
         2400, 2600, 3000, MAX_RATING_SO_FAR+1, 
         10000
     ];
+
+    const rating_color = [
+        "white;",
+        "#078007;", "#77ddbb;", "#03a8b9;",
+        "#0700ff;", "#aa00ac;", "#ff8c17;",
+        "#ff8c07;", "#fd0700;", "#ff000f;", "black;\">L</span><span class = \"shadow-only\" style=\"color:red;",
+        "transparent;\" class = \"rainbow-text\""
+    ]
 
 
     function warn(message) {
@@ -223,7 +243,7 @@
             rainboy_flag &= (Math.abs(prev_rating_deltas[i]) >= 80);
         }
 
-        if (rainboy_flag) warn("\"rainboy delta is detected\"");
+        if (rainboy_flag) warn("\"rainboy delta has been detected\"");
 
         prev_rating_deltas.sort();
 
@@ -240,7 +260,7 @@
     function PredictRatings(maxRating, currRating, prev_rating_deltas, luckyNumber) {
         var predictedRating = maxRating;
         if (!validate_input(maxRating, currRating, prev_rating_deltas)) {
-            // return "0";
+            return "0";
         }
         prev_rating_deltas = normalize_deltas(prev_rating_deltas);
 
@@ -385,11 +405,17 @@
         predictedRatingObj.classList.add('magictime', 'puffIn');
         predictedRatingObj.innerHTML = "Your predicted rating is:<br>"
         predictedRatingObj.innerHTML += "<span class = \"rating-predicted-class\">"+predictedRating+"</span>"; // "ok tested";
-        predictedRatingObj.innerHTML += "<br> You will be <b>" + title_on_rating[currRank + 1] + "</b> soon.";
         // console.log(predictedRatingObj)
-
+        var predRank = currRank;
+        for (var ll = 0; ll < 12; ll++) {
+            if (ratings_list[ll] > predictedRating) {
+                predRank = ll;
+                break;
+            }
+        }
         if (currRank != -1) {
             // add analysis and challenge
+            predictedRatingObj.innerHTML += "<br> You will be "+"<b><span class = \"shadow-only\" style = \" color: " + rating_color[predRank] + "\">" + title_on_rating[predRank] + "</span></b> soon.";
         } else {
             // generate error stream
 
