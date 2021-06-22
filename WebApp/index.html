@@ -89,7 +89,7 @@
         .rating-predicted-class {
             font-size: 250%;
             font-weight: 700;
-            text-shadow: 1px 1px 2px var(--SHADOWUD);
+            text-shadow: 1px 0px 1px var(--SHADOWUD);
             letter-spacing: .4em;
         }
 
@@ -192,7 +192,7 @@
     </div>
     <!-- / User enter details here -->
     <!-- Footer for page here -->
-    <footer class="fixed-bottom page-footer font-small special-color-dark text-seccyud pt-4">
+    <footer class="page-footer font-small special-color-dark text-seccyud pt-4">
 
         <!-- Footer Elements -->
         <div class="container">
@@ -509,7 +509,8 @@
             problemtype = String.fromCharCode(65 + (currRank + 1) / 2);
             additionalThingsObj.innerHTML = "A challenge for you is to solve this problem:- &nbsp; "
                 + contest + " " + problemtype
-                + " &nbsp; <a class = \"link-warning\" href = \"" + url_to_problem + "/" + contest + "/" + problemtype + "\" target=\"_blank\">click here</a>";
+                + " &nbsp; <a class = \"link-warning\" href = \"" + url_to_problem + "/" + contest + "/" + problemtype + "\" target=\"_blank\">click here</a>"
+                +"<br> <span style=\"font-size:80%;\">(If the link is broken, the number you entered is not your lucky number)</span> <br>";
         } else {
             predictedRatingObj.innerHTML += "<br> Haha! <span class \"shadow-only\"><b>Undated</b></span> thing. Back off!";
         }
