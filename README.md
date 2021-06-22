@@ -1,5 +1,11 @@
 # Codeforces-Future-Rating-Predictor
 
+The working of this model will be updated here, in markdown, it is still in progress.
+
+
+
+Link to the codeforces post: https://codeforces.com/blog/entry/92017
+
 Currently, it works on a statistical approach with a few randomisation techniques and outlier management technique. A modified form of K-means clustering has been used to detect the upper bound of rating and a free-form mean is used to get the lower bound of the rating. 
 
 Currently just two clusters are used and the data is modified based on medians and random seeds. The actual rating prediction mechanism is based on the values provided by the seeds. 
@@ -19,4 +25,4 @@ Currently, the model needs the following input from the user:<br>
 
 To make it work under a Machine Learning model with the help of Codeforces API. 
 
-Link to the codeforces post: https://codeforces.com/blog/entry/92017
+
